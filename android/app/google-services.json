@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "356671984598",
+    "project_id": "note-app-faa1e",
+    "storage_bucket": "note-app-faa1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356671984598:android:1cd45460982381b3458a77",
+        "android_client_info": {
+          "package_name": "com.example.demo_of_ddd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356671984598-hphusffu7p025f4nf2t7iqan437brgl2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demo_of_ddd",
+            "certificate_hash": "7504c4bcc406556bb32a9ee0eaa4336bae60a4a2"
+          }
+        },
+        {
+          "client_id": "356671984598-1b882989kh9qv21bl3854qkkf69aa87a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxTxcRmGKENBJhBYVulOQk5stPg_FbmIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356671984598-1b882989kh9qv21bl3854qkkf69aa87a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
