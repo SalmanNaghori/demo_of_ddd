@@ -2,7 +2,7 @@ part of 'sign_in_form_bloc.dart';
 
 @freezed
 abstract class SignInFormState with _$SignInFormState {
-  factory SignInFormState({
+  const factory SignInFormState({
     required EmailAddress emailAddress,
     required Password password,
     required bool showErrorMessages,

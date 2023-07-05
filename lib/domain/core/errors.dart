@@ -1,9 +1,9 @@
 import 'package:demo_of_ddd/domain/core/failures.dart';
 
-class UnexPectedValueError extends Error {
+class UnexpectedValueError extends Error {
   final ValueFailure valueFailure;
 
-  UnexPectedValueError(this.valueFailure);
+  UnexpectedValueError(this.valueFailure);
 
   @override
   String toString() {

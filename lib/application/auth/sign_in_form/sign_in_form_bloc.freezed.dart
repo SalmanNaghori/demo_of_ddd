@@ -944,7 +944,7 @@ class __$$_SignInFormStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SignInFormState implements _SignInFormState {
-  _$_SignInFormState(
+  const _$_SignInFormState(
       {required this.emailAddress,
       required this.password,
       required this.showErrorMessages,
@@ -998,7 +998,7 @@ class _$_SignInFormState implements _SignInFormState {
 }
 
 abstract class _SignInFormState implements SignInFormState {
-  factory _SignInFormState(
+  const factory _SignInFormState(
       {required final EmailAddress emailAddress,
       required final Password password,
       required final bool showErrorMessages,

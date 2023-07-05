@@ -1,4 +1,5 @@
 import 'package:demo_of_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:demo_of_ddd/injection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,10 +11,17 @@ class SignInForm extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Form(
+          autovalidateMode: state.showErrorMessages
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: ListView(
+            padding: const EdgeInsets.all(8),
             children: [
-              const SizedBox(height: 8),
-              Image.asset('assets/notes.png'),
+              const Text(
+                '📝',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 130),
+              ),
               const SizedBox(height: 8),
               TextFormField(
                 decoration: const InputDecoration(
@@ -21,6 +29,21 @@ class SignInForm extends StatelessWidget {
                   labelText: 'Email',
                 ),
                 autocorrect: false,
+                onChanged: (value) => context
+                    .read<SignInFormBloc>()
+                    .add(SignInFormEvent.emailChanged(value)),
+                validator: (_) => context
+                    .read<SignInFormBloc>()
+                    .state
+                    .emailAddress
+                    .value
+                    .fold(
+                      (f) => f.maybeMap(
+                        invalidEmail: (_) => 'Invalid Email',
+                        orElse: () => null,
+                      ),
+                      (_) => null,
+                    ),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -30,7 +53,63 @@ class SignInForm extends StatelessWidget {
                 ),
                 autocorrect: false,
                 obscureText: true,
+                onChanged: (value) => context
+                    .read<SignInFormBloc>()
+                    .add(SignInFormEvent.passwordChanged(value)),
+                validator: (_) =>
+                    context.read<SignInFormBloc>().state.password.value.fold(
+                          (f) => f.maybeMap(
+                            shortPassword: (_) => 'Short Password',
+                            orElse: () => null,
+                          ),
+                          (_) => null,
+                        ),
               ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        context.read<SignInFormBloc>().add(
+                              const SignInFormEvent
+                                  .signInWithEmailAndPasswordPressed(),
+                            );
+                      },
+                      child: const Text('SIGN IN'),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        context.read<SignInFormBloc>().add(
+                              const SignInFormEvent
+                                  .registerWithEmailAndPasswordPressed(),
+                            );
+                      },
+                      child: const Text('REGISTER'),
+                    ),
+                  ),
+                ],
+              ),
+              CupertinoButton(
+                onPressed: () {
+                  getIt<SignInFormBloc>()
+                      .add(const SignInFormEvent.signInWithGooglePressed());
+                },
+                color: Theme.of(context).colorScheme.secondary,
+                child: const Text(
+                  'SIGN IN WITH GOOGLE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              if (state.isSubmitting) ...[
+                const SizedBox(height: 8),
+                const LinearProgressIndicator(value: null),
+              ]
             ],
           ),
         );
