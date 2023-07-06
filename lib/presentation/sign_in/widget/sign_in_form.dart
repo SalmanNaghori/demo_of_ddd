@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:demo_of_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:demo_of_ddd/injection.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +9,27 @@ class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInFormBloc, SignInFormState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        state.authFailureOrSuccessOption.fold(
+          () {},
+          (either) => either.fold(
+            (failure) {
+              FlushbarHelper.createError(
+                message: failure.map(
+                  cancelledByUser: (_) => 'Canclelled',
+                  serverError: (_) => 'Server Error',
+                  emailAlreadyInUse: (_) => 'Email Already in use',
+                  invalidEmailAndPasswordCombination: (_) =>
+                      'Invalid email and password combination',
+                ),
+              ).show(context);
+            },
+            (_) {
+              //TODO:Navigate
+            },
+          ),
+        );
+      },
       builder: (context, state) {
         return Form(
           autovalidateMode: state.showErrorMessages
@@ -17,13 +38,12 @@ class SignInForm extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(8),
             children: [
-              const Text(
-                '📝',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 130),
+              Image.asset(
+                'assets/notes.png',
               ),
               const SizedBox(height: 8),
               TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   labelText: 'Email',
@@ -98,12 +118,20 @@ class SignInForm extends StatelessWidget {
                       .add(const SignInFormEvent.signInWithGooglePressed());
                 },
                 color: Theme.of(context).colorScheme.secondary,
-                child: const Text(
-                  'SIGN IN WITH GOOGLE',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  children: [
+                    const Text(
+                      'SIGN IN WITH GOOGLE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Image.asset(
+                      'assets/google.png',
+                    ),
+                  ],
                 ),
               ),
               if (state.isSubmitting) ...[
