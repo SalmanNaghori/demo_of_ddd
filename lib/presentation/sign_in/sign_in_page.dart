@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:demo_of_ddd/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:demo_of_ddd/injection.dart';
 import 'package:demo_of_ddd/presentation/sign_in/widget/sign_in_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+@RoutePage()
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
