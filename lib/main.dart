@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 void main() async {
-  configureInjection(Environment.prod);
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  print('-- main');
 
+  WidgetsFlutterBinding.ensureInitialized();
+  print('-- WidgetsFlutterBinding.ensureInitialized');
+
+  await Firebase.initializeApp();
+  print('-- main: Firebase.initializeApp');
   runApp(AppWidget());
 }
